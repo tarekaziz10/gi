@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Scoreboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #28a745;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .scoreboard {
+            background: #fff;
+            color: #28a745;
+            border: 2px solid #000;
+            border-radius: 10px;
+            padding: 20px 40px;
+            display: inline-block;
+            margin-top: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .scoreboard h1 {
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        tr:nth-child(odd) {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #007BFF;
+            color: white;
+        }
+        .dynamic-score {
+            font-size: 32px;
+            margin: 20px 0;
+        }
+        .dynamic-score span {
+            font-weight: bold;
+        }
+        .dynamic-row {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 24px;
+        }
+        .dynamic-row:nth-child(odd) {
+            background-color: #ffeb3b;
+            color: #000;
+        }
+        .dynamic-row:nth-child(even) {
+            background-color: #f57c00;
+            color: #fff;
+        }
+        .buttons {
+            margin: 15px 0;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="scoreboard">
+        <h1>Cricket Scoreboard</h1>
+        <table>
+            <tr>
+                <th>Over</th>
+                <th>Runs</th>
+                <th>Wickets</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>12</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>15</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>8</td>
+                <td>2</td>
+            </tr>
+        </table>
+        <div class="dynamic-score">
+            <div class="dynamic-row">
+                <span>Runs:</span> <span id="runs">0</span>
+            </div>
+            <div class="dynamic-row">
+                <span>Wickets:</span> <span id="wickets">0</span>
+            </div>
+            <div class="dynamic-row">
+                <span>Overs:</span> <span id="overs">0</span>.<span id="balls">0</span>
+            </div>
+        </div>
+        <div class="buttons">
+            <h3>Runs</h3>
+            <button onclick="updateRuns(1)">+1</button>
+            <button onclick="updateRuns(-1)">-1</button>
+            <button onclick="updateRuns(4)">+4</button>
+            <button onclick="updateRuns(6)">+6</button>
+        </div>
+        <div class="buttons">
+            <h3>Wickets</h3>
+            <button onclick="updateWickets(1)">+1</button>
+            <button onclick="updateWickets(-1)">-1</button>
+        </div>
+        <div class="buttons">
+            <h3>Balls</h3>
+            <button onclick="updateBalls(1)">+1</button>
+            <button onclick="updateBalls(-1)">-1</button>
+        </div>
+        <div class="buttons">
+            <h3>Overs</h3>
+            <button onclick="updateOvers(1)">+1</button>
+            <button onclick="updateOvers(-1)">-1</button>
+        </div>
+    </div>
+    <script>
+        let runs = 0, wickets = 0, overs = 0, balls = 0;
+
+        function updateRuns(value) {
+            runs = Math.max(0, runs + value);
+            document.getElementById('runs').innerText = runs;
+        }
+
+        function updateWickets(value) {
+            wickets = Math.max(0, wickets + value);
+            document.getElementById('wickets').innerText = wickets;
+        }
+
+        function updateBalls(value) {
+            balls += value;
+            if (balls === 6) {
+                balls = 0;
+                overs++;
+            } else if (balls < 0 && overs > 0) {
+                balls = 5;
+                overs--;
+            } else if (balls < 0) {
+                balls = 0;
+            }
+            document.getElementById('balls').innerText = balls;
+            document.getElementById('overs').innerText = overs;
+        }
+
+        function updateOvers(value) {
+            overs = Math.max(0, overs + value);
+            document.getElementById('overs').innerText = overs;
+        }
+    </script>
+</body>
+</html>
